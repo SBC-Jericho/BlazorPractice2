@@ -1,7 +1,125 @@
-﻿@page "/single-character"
+﻿@page "/single-character/{id:int}"
+@page "/single-character"
+@inject IClientCharacterService ClientCharacterService
+@inject IClientTeamService ClientTeamService
+@inject IClientDifficultyService ClientDifficultyService
+@inject NavigationManager NavigationManager
 
-<h3>SingleCharacter</h3>
+@if (Id is null)
+{
+    <PageTitle>Create a new Character</PageTitle>
+    <h3>Create a new Character</h3>
+}
+else
+{
+    <PageTitle>Edit @character.Name</PageTitle>
+    <h3>Edit @character.Name</h3>
+}
+
+<EditForm Model="character" OnSubmit="HandleSubmit">
+    <div>
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="character.Name" class="form-control" />
+    </div>
+    <div>
+        <label for="bio">Bio</label>
+        <InputText id="bio" @bind-Value="character.Bio" class="form-control" />
+    </div>
+    <div>
+        <label for="BirthDate">Birth Date</label>
+        <InputDate @bind-Value="@character.BirthDate" />
+        <ValidationMessage For="@(() => character.BirthDate)" />
+    </div>
+
+    <div>
+        <label for="image">Image</label>
+        <InputText id="image" @bind-Value="character.Image" class="form-control" />
+    </div>
+
+        <div>
+            <label for="team">Team</label>
+            <br />
+            <InputSelect @bind-Value="character.TeamId" class="form-control">
+                @foreach (var team in teams)
+                {
+                    <option value="@team.Id">@team.Name</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div>
+        <label for="difficulty">Difficulty</label>
+        <InputSelect id="difficulty" @bind-Value="character.DifficultyId" class="form-control">
+            @foreach (var difficulty in difficulties)
+            {
+                <option value="@difficulty.Id">@difficulty.Title</option>
+            }
+        </InputSelect>
+        </div>
+
+        <div>
+        <InputCheckbox id="isReadyToFight" @bind-Value="character.isReadyToFight" class="form-check-input" />
+        <label for="isReadyToFight" class="form-check-label">Ready to Fight?</label>
+        </div>
+ 
+    <br />
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    <button type="button" class="btn btn-danger"
+            @onclick="DeleteCharacter">
+        Delete Character
+    </button>
+    <ValidationSummary />
+</EditForm>
 
 @code {
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
+    public List<Team> teams = new List<Team>();
+
+    public List<Difficulty> difficulties = new List<Difficulty>();
+
+    BlazorPlayGround.Shared.Models.Character character =
+    new BlazorPlayGround.Shared.Models.Character { Name = "New Character" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Save new Character" : "Update Character";
+        teams = await ClientTeamService.GetAllTeam();
+        difficulties = await ClientDifficultyService.GetAllDifficulty();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await ClientCharacterService.GetSingleCharacter((int)Id);
+            if (result is not null)
+                character = result;
+            else
+                NavigationManager.NavigateTo("/single-character");
+
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id is null)
+        {
+            await ClientCharacterService.AddCharacter(character);
+        }
+        else
+        {
+            await ClientCharacterService.UpdateCharacter((int)Id, character);
+        }
+
+    }
+    async Task DeleteCharacter()
+    {
+        await ClientCharacterService.DeleteCharacter(character.Id);
+    }
 
 }

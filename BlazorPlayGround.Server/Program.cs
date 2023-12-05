@@ -1,7 +1,15 @@
 global using BlazorPlayGround.Shared.Models;
+global using BlazorPlayGround.Server.Data;
 using BlazorPlayGround.Server.Services.CharacterService;
+using BlazorPlayGround.Server.Services.DifficultyService;
+using BlazorPlayGround.Server.Services.TeamService;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+
 
 // Add services to the container.
 
@@ -11,6 +19,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IDifficultyService, DifficultyService>();
+builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();
 

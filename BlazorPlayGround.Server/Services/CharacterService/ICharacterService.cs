@@ -1,12 +1,14 @@
-﻿namespace BlazorPlayGround.Server.Services.CharacterService
+﻿using BlazorPlayGround.Shared.DTOs;
+
+namespace BlazorPlayGround.Server.Services.CharacterService
 {
     public interface ICharacterService
     {
-        List<Character> GetAllCharacter();
-        Character? GetSingleCharacter(int id);
-        List<Character> AddCharacter(Character hero);
-        List<Character>? UpdateCharacter(int id, Character request);
-        List<Character>? DeleteCharacter(int id);
+        Task<List<Character>> GetAllCharacter();
+        Task<Character?> GetSingleCharacter(int id);
+        Task<List<Character>> AddCharacter(CharacterDTO hero);
+        Task<List<Character>?> UpdateCharacter(int id, CharacterDTO request);
+        Task<List<Character>?> DeleteCharacter(int id);
 
 
     }

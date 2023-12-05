@@ -1,5 +1,6 @@
 ﻿
 using BlazorPlayGround.Server.Services.CharacterService;
+using BlazorPlayGround.Shared.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +20,13 @@ namespace BlazorPlayGround.Server.Controllers
         public async Task<ActionResult<List<Character>>> GetAllCharacter() 
         {
             
-            return _characterService.GetAllCharacter();
+            return await _characterService.GetAllCharacter();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Character>> GetSingleCharacter(int id)
         {
-            var result = _characterService.GetSingleCharacter(id);
+            var result =  await _characterService.GetSingleCharacter(id);
             if (result is null)
                 return NotFound("Hero Not Found");
 
@@ -33,16 +34,16 @@ namespace BlazorPlayGround.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Character>>> AddCharacter(Character hero)
+        public async Task<ActionResult<List<Character>>> AddCharacter(CharacterDTO hero)
         {
-            var result = _characterService.AddCharacter(hero);
+            var result = await _characterService.AddCharacter(hero);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Character>> UpdateCharacter(int id, Character request)
+        public async Task<ActionResult<Character>> UpdateCharacter(int id, CharacterDTO request)
         {
-            var result = _characterService.UpdateCharacter(id, request);
+            var result = await _characterService.UpdateCharacter(id, request);
             if (result is null)
                 return NotFound("Hero Not Found");
 
@@ -52,7 +53,7 @@ namespace BlazorPlayGround.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Character>>DeleteCharacter(int id)
         {
-            var result = _characterService.DeleteCharacter(id);
+            var result = await _characterService.DeleteCharacter(id);
             if (result is null)
                 return NotFound("Hero Not Found");
 

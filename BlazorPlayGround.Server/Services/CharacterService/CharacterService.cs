@@ -1,67 +1,76 @@
 ﻿
+using Azure.Core;
+using BlazorPlayGround.Shared.DTOs;
+
 namespace BlazorPlayGround.Server.Services.CharacterService
 {
     public class CharacterService : ICharacterService
     {
-        private static List<Character> characters = new List<Character>
-        {
-                new Character
-                {
-                Id = 1,
-                  Name = "Spider Man",
-                  Bio = "Amazing Spiderman",
-                  BirthDate = DateTime.Now,
-                  Image = "https://seeklogo.com/images/S/spider-man-comic-new-logo-322E9DE914-seeklogo.com.png",
-                  TeamId = 1,
-                  DifficultyId = 1,
-                  isReadyToFight = true,
-                },
-                new Character
-                {
-                Id = 2,
-                  Name = "Batman",
-                  Bio = "Night Owl",
-                  BirthDate = DateTime.Now,
-                  Image = "https://icon-library.com/images/batman-icon-png/batman-icon-png-14.jpg",
-                  TeamId = 2,
-                  DifficultyId = 2,
-                  isReadyToFight = true,
-                }
+        //Dependency injection
+        private readonly DataContext _context;
 
-        };
-        public List<Character> AddCharacter(Character hero)
+        //constructor to inject the DataContext again
+        public CharacterService(DataContext context)
         {
-            characters.Add(hero);
-            return characters;
+            _context = context;
+        }
+        public async Task<List<Character>> AddCharacter(CharacterDTO hero)
+        {
+            var newCharacter = new Character
+            {
+                Name = hero.Name,
+                Bio = hero.Bio,
+                BirthDate = hero.BirthDate,
+                TeamId = hero.TeamId,
+                DifficultyId = hero.DifficultyId,
+                Image = hero.Image,
+                isReadyToFight = hero.isReadyToFight
+                
+            };
+
+            _context.Add(newCharacter);
+            await _context.SaveChangesAsync();
+            return await _context.Characters.ToListAsync();
         }
 
-        public List<Character>? DeleteCharacter(int id)
+        public async Task<List<Character>?> DeleteCharacter(int id)
         {
-            var hero = characters.Find(x => x.Id == id);
+            var hero = await _context.Characters.FindAsync(id);
             if (hero is null)
                 return null;
 
-            characters.Remove(hero);
-            return characters;
+            _context.Characters.Remove(hero);
+            await _context.SaveChangesAsync();
+
+
+            return await _context.Characters.ToListAsync();
         }
 
-        public List<Character> GetAllCharacter()
+        public async Task<List<Character>> GetAllCharacter()
         {
-            return characters;
+            var character = await _context.Characters
+                .Include(c => c.Team)
+                .Include(c => c.Difficulty)
+                .ToListAsync();
+            return character;
         }
 
-        public Character? GetSingleCharacter(int id)
+        public async Task<Character?> GetSingleCharacter(int id)
         {
 
-            var hero = characters.Find(x => x.Id == id);
+            var hero = await _context.Characters.FindAsync(id);
             if (hero is null)
                 return null;
             return hero;
         }
 
-        public List<Character>? UpdateCharacter(int id, Character request)
+        public async Task<List<Character>?> UpdateCharacter(int id, CharacterDTO request)
         {
-            var hero = characters.Find(x => x.Id == id);
+            var hero = await _context.Characters
+                .Include (c => c.Team)
+                .Include (c => c.Difficulty)
+                .Where(c => c.Id == id)
+                .FirstOrDefaultAsync();
             if (hero is null)
                 return null;
 
@@ -73,7 +82,9 @@ namespace BlazorPlayGround.Server.Services.CharacterService
             hero.DifficultyId = request.DifficultyId;
             hero.isReadyToFight = request.isReadyToFight;
 
-            return characters;
+            await _context.SaveChangesAsync();
+
+            return await _context.Characters.ToListAsync();
         }
     }
 }
