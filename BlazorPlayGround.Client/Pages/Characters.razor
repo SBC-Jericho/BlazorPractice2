@@ -1,4 +1,4 @@
-﻿@page "/characters"
+﻿@page "/all-characters"
 @inject IClientCharacterService ClientCharacterService
 @inject IClientTeamService ClientTeamService
 @inject IClientDifficultyService ClientDifficultyService
@@ -10,6 +10,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>Name</th>
             <th>Bio</th>
             <th>Birth Date</th>
@@ -24,9 +25,10 @@
         {
 
             <tr>
+                <td><img src="@character.Image" class="rounded" style="max-height: 100px;" /></td>
                 <td>@character.Name</td>
                 <td>@character.Bio</td>
-                <td>@character.BirthDate</td>
+                <td>@character.BirthDate.ToString("MM/dd/yyyy")</td>
                 @if(character.Team != null){
                     <td>@character.Team.Name</td>
                 }
@@ -60,6 +62,7 @@
         @onclick="CreateNewCharacter">
     Create new Character
 </button>
+<p style="height:500px;"></p>
 @code {
 
     // lifecycle method

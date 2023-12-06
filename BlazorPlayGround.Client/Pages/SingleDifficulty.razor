@@ -1,0 +1,80 @@
+﻿@page "/single-difficulty/{id:int}"
+@page "/single-difficulty"
+@inject IClientCharacterService ClientCharacterService
+@inject IClientTeamService ClientTeamService
+@inject IClientDifficultyService ClientDifficultyService
+@inject NavigationManager NavigationManager
+
+@if (Id is null)
+{
+    <PageTitle>Create a new Difficulty</PageTitle>
+    <h3>Create a new Difficulty</h3>
+}
+else
+{
+    <PageTitle>Edit @difficulty.Title</PageTitle>
+    <h3>Edit @difficulty.Title</h3>
+}
+
+<EditForm Model="difficulty" OnSubmit="HandleSubmit">
+    <div>
+        <label for="Title">Title</label>
+        <InputText id="Title" @bind-Value="difficulty.Title" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    <button type="button" class="btn btn-danger"
+            @onclick="DeleteDifficulty">
+        Delete Difficulty
+    </button>
+    <ValidationSummary />
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
+    BlazorPlayGround.Shared.Models.Difficulty difficulty =
+    new BlazorPlayGround.Shared.Models.Difficulty { Title = "New Difficulty" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Save new Difficulty" : "Update Difficulty";
+        await ClientCharacterService.GetAllCharacter();
+        await ClientTeamService.GetAllTeam();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await ClientDifficultyService.GetSingleDifficulty((int)Id);
+            if (result is not null)
+                difficulty = result;
+            else
+                NavigationManager.NavigateTo("/single-difficulty");
+
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id is null)
+        {
+            await ClientDifficultyService.AddDifficulty(difficulty);
+        }
+        else
+        {
+            await ClientDifficultyService.UpdateDifficulty((int)Id, difficulty);
+        }
+    }
+
+    async Task DeleteDifficulty()
+    {
+        await ClientDifficultyService.DeleteDifficulty(difficulty.Id);
+    }
+
+}

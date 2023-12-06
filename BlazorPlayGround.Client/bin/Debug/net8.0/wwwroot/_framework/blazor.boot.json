@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "BlazorPlayGround.Client",
   "resources": {
-    "hash": "sha256-7l/oHQ+1uSLHqTwksCPZjXdNxlcJ1w3ge21BdJ0JIXM=",
+    "hash": "sha256-wQsvwY/iz6Pw1qJhxU02fE9YI90UaVpyoxosacBDOjA=",
     "jsModuleNative": {
       "dotnet.native.8.0.0.wudyxg6sh8.js": "sha256-LjLDIz9+J7uuiwMlQ4HbNx2BnSpphOtO2MwkoI28vdI="
     },
@@ -208,12 +208,12 @@
       "mscorlib.wasm": "sha256-cDuLeL3OCtVtiid/dyex1MVgbuzDSRwZxKzuP2Dp4mg=",
       "netstandard.wasm": "sha256-A0h86SDieTMoU/wU2JTszWCsUmMuguDcbap0b0BzsmI=",
       "System.Private.CoreLib.wasm": "sha256-/0DNIm/T0C07X7Tuz5uR8JvVCoAfEE2MnfPUSjyS9xc=",
-      "BlazorPlayGround.Shared.wasm": "sha256-Bgd41MX0DzYkc8PQuQ0DHiICwGObe0udv2snhplUQZU=",
-      "BlazorPlayGround.Client.wasm": "sha256-E7s540a+iYihK16CkvqadjZJ6dewmsGLH2sV/+URGn4="
+      "BlazorPlayGround.Shared.wasm": "sha256-SI7x6eJdDChBbsjslyXtUJpsm4Je4ndZCO+KZm7H0iU=",
+      "BlazorPlayGround.Client.wasm": "sha256-cXLJtUAdBSwKofvE8gi/hnMWVe1frmnt5VYTnYfZ7Yg="
     },
     "pdb": {
-      "BlazorPlayGround.Shared.pdb": "sha256-qzM6nKWR6j66hC/8OlzYI2F8Yp+uFdRj4/T+DPoXDxA=",
-      "BlazorPlayGround.Client.pdb": "sha256-mQq9NqDlFQplJm3iWmIUqGJvj45yaTHP/NsBD/Ey5Ss="
+      "BlazorPlayGround.Shared.pdb": "sha256-IbGDIZMQC8iqeZZ8d3+3AkcrMDcfohl7FSItwrrcXGM=",
+      "BlazorPlayGround.Client.pdb": "sha256-kHO0FIRd6mc/T9ylYDlnp/g1wE0xDbIlQnyFnRhItaE="
     }
   },
   "cacheBootResources": true,

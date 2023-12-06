@@ -17,9 +17,11 @@ else
 }
 
 <EditForm Model="character" OnSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
     <div>
         <label for="name">Name</label>
         <InputText id="name" @bind-Value="character.Name" class="form-control" />
+        <ValidationMessage For="@(() => character.Name)" />
     </div>
     <div>
         <label for="bio">Bio</label>
@@ -27,7 +29,7 @@ else
     </div>
     <div>
         <label for="BirthDate">Birth Date</label>
-        <InputDate @bind-Value="@character.BirthDate" />
+        <InputDate @bind-Value="@character.BirthDate" class="form-control"/>
         <ValidationMessage For="@(() => character.BirthDate)" />
     </div>
 
@@ -38,28 +40,36 @@ else
 
         <div>
             <label for="team">Team</label>
-            <br />
-            <InputSelect @bind-Value="character.TeamId" class="form-control">
-                @foreach (var team in teams)
+            <InputRadioGroup @bind-Value="character.TeamId" class="form-control">
+                @foreach (var team in ClientTeamService.ClientTeam)
                 {
-                    <option value="@team.Id">@team.Name</option>
+                    <br />
+                    <InputRadio Value="@team.Id"/>
+                    <span style="padding-left: 5px;">@team.Name</span>
                 }
-            </InputSelect>
+            </InputRadioGroup>
         </div>
 
         <div>
         <label for="difficulty">Difficulty</label>
         <InputSelect id="difficulty" @bind-Value="character.DifficultyId" class="form-control">
-            @foreach (var difficulty in difficulties)
+            <option disabled value="0">Select Difficulty</option>
+            @foreach (var difficulty in ClientDifficultyService.ClientDifficulty)
             {
                 <option value="@difficulty.Id">@difficulty.Title</option>
             }
         </InputSelect>
         </div>
-
         <div>
         <InputCheckbox id="isReadyToFight" @bind-Value="character.isReadyToFight" class="form-check-input" />
         <label for="isReadyToFight" class="form-check-label">Ready to Fight?</label>
+        </div>
+        <div>
+            <img src="@character.Image" class="rounded" style="max-height: 200px;" />
+        </div>
+        <div>
+            <label for="image">Image</label>
+            <InputFile OnChange="OnFileChange" class="form-control"></InputFile>
         </div>
  
     <br />
@@ -68,6 +78,7 @@ else
             @onclick="DeleteCharacter">
         Delete Character
     </button>
+    <p style="height:500px;"></p>
     <ValidationSummary />
 </EditForm>
 
@@ -78,18 +89,14 @@ else
 
     string btnText = string.Empty;
 
-    public List<Team> teams = new List<Team>();
-
-    public List<Difficulty> difficulties = new List<Difficulty>();
-
     BlazorPlayGround.Shared.Models.Character character =
     new BlazorPlayGround.Shared.Models.Character { Name = "New Character" };
 
     protected override async Task OnInitializedAsync()
     {
         btnText = Id == null ? "Save new Character" : "Update Character";
-        teams = await ClientTeamService.GetAllTeam();
-        difficulties = await ClientDifficultyService.GetAllDifficulty();
+        await ClientTeamService.GetAllTeam();
+        await ClientDifficultyService.GetAllDifficulty();
     }
 
     protected override async Task OnParametersSetAsync()
@@ -117,6 +124,18 @@ else
         }
 
     }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = "image/png";
+        var resizedImage = await e.File.RequestImageFileAsync(format, 200, 200);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        character.Image = imageData;
+
+    }
+
     async Task DeleteCharacter()
     {
         await ClientCharacterService.DeleteCharacter(character.Id);

@@ -22,7 +22,7 @@ namespace BlazorPlayGround.Client.Services.ClientTeamService
             // Controller end point
             await _http.PostAsJsonAsync("api/team", team);
             // Razor page endpoint
-            _navigationManager.NavigateTo("teams");
+            _navigationManager.NavigateTo("all-teams");
         }
 
         public async Task DeleteTeam(int id)
@@ -61,7 +61,7 @@ namespace BlazorPlayGround.Client.Services.ClientTeamService
         public async Task UpdateTeam(int id, Team request)
         {
             await _http.PutAsJsonAsync($"api/team/{id}", request);
-            _navigationManager.NavigateTo("teams");
+            _navigationManager.NavigateTo("all-teams");
         }
     }
 }

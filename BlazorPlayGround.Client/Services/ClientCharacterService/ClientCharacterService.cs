@@ -19,9 +19,9 @@ namespace BlazorPlayGround.Client.Services.ClientCharacterService
         public async Task AddCharacter(Character character)
         {
             // Controller end point
-            await _http.PostAsJsonAsync("api/character", character);
+            await _http.PostAsJsonAsync("api/character/", character);
             // Razor page endpoint
-            _navigationManager.NavigateTo("characters");
+            _navigationManager.NavigateTo("all-characters");
         }
 
         public async Task DeleteCharacter(int id)
@@ -36,11 +36,14 @@ namespace BlazorPlayGround.Client.Services.ClientCharacterService
             }
         }
 
-        public async Task GetAllCharacter()
+        public async Task<List<Character>> GetAllCharacter()
         {
             var result = await _http.GetFromJsonAsync<List<Character>>("api/character/");
             if (result != null)
+            {
                 ClientCharacter = result;
+            }
+            return ClientCharacter;
         }
 
         public async Task<Character?> GetSingleCharacter(int id)
@@ -57,7 +60,7 @@ namespace BlazorPlayGround.Client.Services.ClientCharacterService
         public async Task UpdateCharacter(int id, Character request)
         {
             await _http.PutAsJsonAsync($"api/character/{id}", request);
-            _navigationManager.NavigateTo("characters");
+            _navigationManager.NavigateTo("all-characters");
         }
 
     }

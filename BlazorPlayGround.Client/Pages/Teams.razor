@@ -1,0 +1,65 @@
+﻿@page "/all-teams"
+@inject IClientCharacterService ClientCharacterService
+@inject IClientTeamService ClientTeamService
+@inject IClientDifficultyService ClientDifficultyService
+@inject NavigationManager NavigationManager
+<PageTitle>Teams</PageTitle>
+
+<h3>Teams</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Team Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in ClientTeamService.ClientTeam)
+        {
+            <tr>
+                <td>@team.Name</td>
+                <td>
+                    <button class="btn btn-primary"
+                            @onclick="(() => ShowTeam(team.Id))">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>`
+                    <button class="btn btn-danger"
+                            @onclick="(() => DeleteTeam(team.Id))">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="btn btn-primary"
+        @onclick="CreateNewTeam">
+    Create new Team
+</button>
+@code {
+
+    // lifecycle method
+    protected override async Task OnInitializedAsync()
+    {
+        await ClientTeamService.GetAllTeam();
+    }
+
+    void ShowTeam(int id)
+    {
+        //Navigate the user to another page - inject  NavigationManager NavigationManager
+        NavigationManager.NavigateTo($"single-team/{id}");
+    }
+
+    void CreateNewTeam()
+    {
+        NavigationManager.NavigateTo("/single-team");
+    }
+
+    async Task DeleteTeam(int id)
+    {
+        await ClientTeamService.DeleteTeam(id);
+        StateHasChanged();
+    }
+}

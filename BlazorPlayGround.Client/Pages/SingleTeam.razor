@@ -1,0 +1,80 @@
+﻿@page "/single-team/{id:int}"
+@page "/single-team"
+@inject IClientCharacterService ClientCharacterService
+@inject IClientTeamService ClientTeamService
+@inject IClientDifficultyService ClientDifficultyService
+@inject NavigationManager NavigationManager
+
+@if (Id is null)
+{
+    <PageTitle>Create a new Team</PageTitle>
+    <h3>Create a new Team</h3>
+}
+else
+{
+    <PageTitle>Edit @teams.Name</PageTitle>
+    <h3>Edit @teams.Name</h3>
+}
+
+<EditForm Model="teams" OnSubmit="HandleSubmit">
+    <div>
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="teams.Name" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    <button type="button" class="btn btn-danger"
+            @onclick="DeleteTeam">
+        Delete Team
+    </button>
+    <ValidationSummary />
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
+    BlazorPlayGround.Shared.Models.Team teams =
+    new BlazorPlayGround.Shared.Models.Team { Name = "New Team" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Save new Team" : "Update Team";
+        await ClientTeamService.GetAllTeam();
+        await ClientDifficultyService.GetAllDifficulty();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await ClientTeamService.GetSingleTeam((int)Id);
+            if (result is not null)
+                teams = result;
+            else
+                NavigationManager.NavigateTo("/single-team");
+
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id is null)
+        {
+            await ClientTeamService.AddTeam(teams);
+        }
+        else
+        {
+            await ClientTeamService.UpdateTeam((int)Id, teams);
+        }
+    }
+
+    async Task DeleteTeam()
+    {
+        await ClientTeamService.DeleteTeam(teams.Id);
+    }
+
+}

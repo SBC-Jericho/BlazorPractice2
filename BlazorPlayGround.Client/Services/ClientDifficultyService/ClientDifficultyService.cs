@@ -14,14 +14,14 @@ namespace BlazorPlayGround.Client.Services.ClientDifficultyService
             _http = http;
             _navigationManager = navigationManager;
         }
-        public List<Difficulty> ClientDifficulty { get; set; }
+        public List<Difficulty> ClientDifficulty { get; set; } = new List<Difficulty>();
 
         public async Task AddDifficulty(Difficulty difficulty)
         {
             // Controller end point
             await _http.PostAsJsonAsync("api/difficulty", difficulty);
             // Razor page endpoint
-            _navigationManager.NavigateTo("difficultys");
+            _navigationManager.NavigateTo("all-difficulties");
         }
 
         public async Task DeleteDifficulty(int id)
@@ -61,7 +61,7 @@ namespace BlazorPlayGround.Client.Services.ClientDifficultyService
         public async Task UpdateDifficulty(int id, Difficulty request)
         {
             await _http.PutAsJsonAsync($"api/difficulty/{id}", request);
-            _navigationManager.NavigateTo("difficultys");
+            _navigationManager.NavigateTo("all-difficulties");
         }
     }
 }

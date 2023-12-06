@@ -1,0 +1,67 @@
+﻿@page "/all-difficulties"
+@inject IClientCharacterService ClientCharacterService
+@inject IClientTeamService ClientTeamService
+@inject IClientDifficultyService ClientDifficultyService
+@inject NavigationManager NavigationManager
+<PageTitle>Difficulty</PageTitle>
+
+<h3>Difficulty</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var difficulty in ClientDifficultyService.ClientDifficulty)
+        {
+
+            <tr>
+                <td>@difficulty.Title</td>
+                <td>
+                    <button class="btn btn-primary"
+                            @onclick="(() => ShowDifficulty(difficulty.Id))">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>`
+                    <button class="btn btn-danger"
+                            @onclick="(() => DeleteDifficulty(difficulty.Id))">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="btn btn-primary"
+        @onclick="CreateNewDifficulty">
+    Create new Difficulty
+</button>
+@code {
+
+    // lifecycle method
+    protected override async Task OnInitializedAsync()
+    {
+        await ClientDifficultyService.GetAllDifficulty();
+    }
+
+    void ShowDifficulty(int id)
+    {
+        //Navigate the user to another page - inject  NavigationManager NavigationManager
+        NavigationManager.NavigateTo($"single-difficulty/{id}");
+    }
+
+    void CreateNewDifficulty()
+    {
+        NavigationManager.NavigateTo("/single-difficulty");
+    }
+
+    async Task DeleteDifficulty(int id)
+    {
+        await ClientDifficultyService.DeleteDifficulty(id);
+        StateHasChanged();
+    }
+}
