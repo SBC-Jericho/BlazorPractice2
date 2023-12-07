@@ -1,5 +1,5 @@
 ﻿@page "/all-characters"
-@inject IClientCharacterService ClientCharacterService
+@inject IClientCharacterService ClientCharacterService 
 @inject IClientTeamService ClientTeamService
 @inject IClientDifficultyService ClientDifficultyService
 @inject NavigationManager NavigationManager
@@ -7,7 +7,7 @@
 
 <h1>Character</h1>
 
-<table class="table">
+@* <MudSimpleTable Hover="true" Striped="true" Dense="true">
     <thead>
         <tr>
             <th></th>
@@ -46,7 +46,7 @@
                 <td>@character.isReadyToFight</td>
                 <td>
                     <button class="btn btn-primary"
-                            @onclick="(() => ShowCharacter(character.Id))">
+                            @onclick="(() => EditCharacter(character.Id))">
                         <i class="fa-solid fa-pencil"></i>
                     </button>`
                     <button class="btn btn-danger"
@@ -57,11 +57,74 @@
             </tr>
         }
     </tbody>
-</table>
-<button class="btn btn-primary"
+</MudSimpleTable> *@
+
+
+<MudTable Items="ClientCharacterService.ClientCharacter" Hover="true" Striped="true" Dense="true" Class="mb-2">
+    <HeaderContent>
+        <MudTh></MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Bio</MudTh>
+        <MudTh>Birth Date</MudTh>
+        <MudTh>Team</MudTh>
+        <MudTh>Difficulty</MudTh>
+        <MudTh>Ready to Fight?</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Image"><MudAvatar Image="@context.Image" /></MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Bio">@context.Bio</MudTd>
+            <MudTd DataLabel="BirthDate">
+                @if (context.BirthDate.HasValue)
+            {
+                @context.BirthDate.Value.ToString("MMMM dd, yyyy")
+            }
+            else
+            {
+                <span>N/A</span>
+            }
+        </MudTd>
+            @if (context.Team != null)
+            {
+            <MudTd DataLabel="Team">@context.Team.Name</MudTd>
+            }
+            else
+            {
+              <MudTd>N/A</MudTd>
+            }
+        @if (context.Difficulty != null)
+            {
+            <MudTd DataLabel="Difficulty">@context.Difficulty.Title</MudTd>
+            }
+            else
+            {
+                <MudTd>N/A</MudTd>
+            }
+        <MudTd DataLabel="isReadyToFight">@context.isReadyToFight</MudTd>
+            <MudTd DataLabel="Edit">
+                <MudIconButton OnClick="(() => EditCharacter(context.Id))"
+                                Icon="@Icons.Material.Filled.Edit"
+                                Color="Color.Primary"
+                                Variant="Variant.Filled"></MudIconButton>
+
+            </MudTd>
+            <MudTd DataLabel="Delete">
+                <MudIconButton OnClick="(() => DeleteCharacter(context.Id))"
+                               Icon="@Icons.Material.Filled.Delete"
+                               Color="Color.Error"
+                               Variant="Variant.Filled"></MudIconButton>
+            </MudTd>
+
+    </RowTemplate>
+
+</MudTable>  
+
+    <MudButton @onclick="CreateNewCharacter" Color="Color.Primary" Variant="Variant.Filled">Create new character</MudButton>
+
+@* <button class="btn btn-primary"
         @onclick="CreateNewCharacter">
     Create new Character
-</button>
+</button> *@
 <p style="height:500px;"></p>
 @code {
 
@@ -71,7 +134,7 @@
         await ClientCharacterService.GetAllCharacter();
     }
 
-    void ShowCharacter(int id)
+    void EditCharacter(int id)
     {
         //Navigate the user to another page - inject  NavigationManager NavigationManager
         NavigationManager.NavigateTo($"single-character/{id}");

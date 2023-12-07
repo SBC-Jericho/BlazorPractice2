@@ -207,3 +207,4 @@ C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Server\obj\Debug\net
 C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Server\obj\Debug\net8.0\BlazorPlayGround.Server.pdb
 C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Server\obj\Debug\net8.0\BlazorPlayGround.Server.genruntimeconfig.cache
 C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Server\obj\Debug\net8.0\ref\BlazorPlayGround.Server.dll
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Server\bin\Debug\net8.0\MudBlazor.dll

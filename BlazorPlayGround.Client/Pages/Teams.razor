@@ -7,7 +7,35 @@
 
 <h3>Teams</h3>
 
-<table class="table">
+<MudTable Items="ClientTeamService.ClientTeam" Hover="true" Striped="true" Dense="true" Class="mb-2">
+
+    <HeaderContent>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd>
+            <MudTd DataLabel="Edit">
+                <MudIconButton OnClick="(() => EditTeam(context.Id))"
+                Icon="@Icons.Material.Filled.Edit"
+                Color="Color.Primary"
+                Variant="Variant.Filled">
+                </MudIconButton>
+            </MudTd>
+            <MudTd DataLabel="Delete">
+                <MudIconButton OnClick="(() => DeleteTeam(context.Id))"
+                               Icon="@Icons.Material.Filled.Delete"
+                               Color="Color.Error"
+                               Variant="Variant.Filled">
+                </MudIconButton>
+            </MudTd>
+            </MudTd>
+    </RowTemplate>
+
+</MudTable>
+
+    <MudButton @onclick=CreateNewTeam Color="Color.Primary" Variant="Variant.Filled">Create new Team</MudButton>
+
+@* <table class="table">
     <thead>
         <tr>
             <th>Team Name</th>
@@ -22,7 +50,7 @@
                 <td>@team.Name</td>
                 <td>
                     <button class="btn btn-primary"
-                            @onclick="(() => ShowTeam(team.Id))">
+                            @onclick="(() => EditTeam(team.Id))">
                         <i class="fa-solid fa-pencil"></i>
                     </button>`
                     <button class="btn btn-danger"
@@ -37,7 +65,7 @@
 <button class="btn btn-primary"
         @onclick="CreateNewTeam">
     Create new Team
-</button>
+</button> *@
 @code {
 
     // lifecycle method
@@ -46,7 +74,7 @@
         await ClientTeamService.GetAllTeam();
     }
 
-    void ShowTeam(int id)
+    void EditTeam(int id)
     {
         //Navigate the user to another page - inject  NavigationManager NavigationManager
         NavigationManager.NavigateTo($"single-team/{id}");

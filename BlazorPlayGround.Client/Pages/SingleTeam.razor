@@ -17,6 +17,23 @@ else
 }
 
 <EditForm Model="teams" OnSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <MudCard>
+            <MudCardContent>
+                <MudTextField Label="Name" @bind-Value="teams.Name"
+                              For="@(() => teams.Name)"></MudTextField>
+            </MudCardContent>
+        </MudCard>
+        <MudButton ButtonType="ButtonType.Submit" Class="mt-4" Color="Color.Primary" Variant="Variant.Filled">
+            @btnText
+        </MudButton>
+        <MudButton @onclick="DeleteTeam" Class="mt-4" Color="Color.Error" Variant="Variant.Filled">
+                Delete Team
+        </MudButton>
+    <ValidationSummary />
+</EditForm>
+
+@* <EditForm Model="teams" OnSubmit="HandleSubmit">
     <div>
         <label for="name">Name</label>
         <InputText id="name" @bind-Value="teams.Name" class="form-control" />
@@ -29,7 +46,7 @@ else
     </button>
     <ValidationSummary />
 </EditForm>
-
+ *@
 @code {
 
     [Parameter]
@@ -38,7 +55,7 @@ else
     string btnText = string.Empty;
 
     BlazorPlayGround.Shared.Models.Team teams =
-    new BlazorPlayGround.Shared.Models.Team { Name = "New Team" };
+    new BlazorPlayGround.Shared.Models.Team();
 
     protected override async Task OnInitializedAsync()
     {

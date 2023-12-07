@@ -9,7 +9,7 @@ namespace BlazorPlayGround.Shared.Models
         [Required(ErrorMessage = "Please, give this character a name: ")]
         public string Name { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
-        public DateTime BirthDate { get; set; } = DateTime.Now;
+        public DateTime? BirthDate { get; set; } = DateTime.Now;
         public string Image { get; set; } = string.Empty;
         public Team Team { get; set; }
         public int TeamId { get; set; }

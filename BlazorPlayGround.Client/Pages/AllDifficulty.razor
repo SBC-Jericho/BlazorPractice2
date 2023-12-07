@@ -7,7 +7,36 @@
 
 <h3>Difficulty</h3>
 
-<table class="table">
+
+<MudTable Items="ClientDifficultyService.ClientDifficulty" Hover="true" Striped="true" Dense="true" Class="mb-2">
+
+    <HeaderContent>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Title">@context.Title</MudTd>
+            <MudTd>
+                <MudTd DataLabel="Edit">
+                    <MudIconButton OnClick="(() => EditDifficulty(context.Id))"
+                                   Icon="@Icons.Material.Filled.Edit"
+                                   Color="Color.Primary"
+                                   Variant="Variant.Filled">
+                    </MudIconButton>
+                </MudTd>
+                <MudTd DataLabel="Delete">
+                    <MudIconButton OnClick="(() => DeleteDifficulty(context.Id))"
+                                   Icon="@Icons.Material.Filled.Delete"
+                                   Color="Color.Error"
+                                   Variant="Variant.Filled">
+                    </MudIconButton>
+                </MudTd>
+            </MudTd>
+        </RowTemplate>
+
+</MudTable>
+
+    <MudButton @onclick=CreateNewDifficulty Color="Color.Primary" Variant="Variant.Filled">Create new Difficulty</MudButton>
+
+@* <table class="table">
     <thead>
         <tr>
             <th></th>
@@ -24,7 +53,7 @@
                 <td>@difficulty.Title</td>
                 <td>
                     <button class="btn btn-primary"
-                            @onclick="(() => ShowDifficulty(difficulty.Id))">
+                            @onclick="(() => EditDifficulty(difficulty.Id))">
                         <i class="fa-solid fa-pencil"></i>
                     </button>`
                     <button class="btn btn-danger"
@@ -39,7 +68,8 @@
 <button class="btn btn-primary"
         @onclick="CreateNewDifficulty">
     Create new Difficulty
-</button>
+</button> *@
+
 @code {
 
     // lifecycle method
@@ -48,7 +78,7 @@
         await ClientDifficultyService.GetAllDifficulty();
     }
 
-    void ShowDifficulty(int id)
+    void EditDifficulty(int id)
     {
         //Navigate the user to another page - inject  NavigationManager NavigationManager
         NavigationManager.NavigateTo($"single-difficulty/{id}");

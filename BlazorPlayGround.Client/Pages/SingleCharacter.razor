@@ -16,8 +16,52 @@ else
     <h3>Edit @character.Name</h3>
 }
 
+
 <EditForm Model="character" OnSubmit="HandleSubmit">
     <DataAnnotationsValidator />
+    <MudCard>
+        <MudCardContent>
+            <MudTextField Label="Name" @bind-Value="character.Name"
+                         For="@(() => character.Name)"></MudTextField>
+            <MudTextField Label="Bio" @bind-Value="character.Bio"
+                        Lines="2"></MudTextField>
+            <MudDatePicker Label="Birth Date" @bind-Date="character.BirthDate"></MudDatePicker>
+            <MudRadioGroup Class="my-4" @bind-SelectedOption="character.TeamId">
+                @foreach (var team in ClientTeamService.ClientTeam)
+                {
+                    <MudRadio Option="team.Id" Color="Color.Primary" Size="Size.Small">@team.Name</MudRadio>
+                }
+            </MudRadioGroup>
+            <MudSelect Label="Difficulty" @bind-Value="character.DifficultyId">
+                <MudSelectItem Value="0">Select Difficulty</MudSelectItem>
+                @foreach (var difficulty in ClientDifficultyService.ClientDifficulty)
+                {
+                    <MudSelectItem Value="difficulty.Id">@difficulty.Title</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSwitch Label="Ready To Fight?" @bind-Checked="@character.isReadyToFight"
+                        Color="Color.Primary">
+            </MudSwitch>
+            <br />
+            <InputFile id="fileInput" OnChange="OnFileChange" hidden/>
+            <MudButton HtmlTag="label"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Filled.CloudUpload"
+                       for="fileInput">
+                Upload Image
+            </MudButton>
+            <br />
+            <MudImage Src="@character.Image" Elevation="25" Class="rounded my-2"></MudImage>
+        </MudCardContent>
+    </MudCard>
+    <MudButton ButtonType="ButtonType.Submit" Class="mt-4" Color="Color.Primary" Variant="Variant.Filled">
+        @btnText
+    </MudButton>
+    <MudButton @onclick="DeleteCharacter" Class="mt-4" Color="Color.Error" Variant="Variant.Filled">
+        Delete Character
+    </MudButton>
+@* 
     <div>
         <label for="name">Name</label>
         <InputText id="name" @bind-Value="character.Name" class="form-control" />
@@ -77,8 +121,8 @@ else
     <button type="button" class="btn btn-danger"
             @onclick="DeleteCharacter">
         Delete Character
-    </button>
-    <p style="height:500px;"></p>
+    </button>*@
+    <p style="height:500px;"></p> 
     <ValidationSummary />
 </EditForm>
 
@@ -90,7 +134,7 @@ else
     string btnText = string.Empty;
 
     BlazorPlayGround.Shared.Models.Character character =
-    new BlazorPlayGround.Shared.Models.Character { Name = "New Character" };
+    new BlazorPlayGround.Shared.Models.Character();
 
     protected override async Task OnInitializedAsync()
     {
@@ -117,6 +161,7 @@ else
         if (Id is null)
         {
             await ClientCharacterService.AddCharacter(character);
+            StateHasChanged();
         }
         else
         {
