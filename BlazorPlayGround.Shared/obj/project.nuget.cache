@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "F81ajbb7+KPpQfVX3DulAr3bloRgiLQ+MVAOGe00QVcz8v0+Omb0HLLkbc9jwBMSup0aU0ibuym71+iMsmu/uA==",
+  "dgSpecHash": "Ull/BaD0NOHsqRjJ+0znIA6gobOwhpLhCc9Z/L0T8x92tUKw1jTm9iJQHuJDppzkkEtPBqlFkknnAY0kSwHVxg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj",
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

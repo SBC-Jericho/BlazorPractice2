@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1Dg7ivP+4C/37d4Ii5YQmk6D5hCjkonr7UEokvr+Hwbp6VPkMxA6tQLqDEMZrodsBmNannP6obXGysL0J1ifQA==",
+  "dgSpecHash": "O6W6/RawZEA9aXuFMQrvVznQQu7N+ovmYbMp5HxpjHwddtgXjE+OTarKwvbEIptDvJA3j60Q19/FvC5lsQiliA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.0\\microsoft.aspnetcore.authorization.8.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.components\\8.0.0\\microsoft.aspnetcore.components.8.0.0.nupkg.sha512",
