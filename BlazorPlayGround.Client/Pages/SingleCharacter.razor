@@ -4,6 +4,7 @@
 @inject IClientTeamService ClientTeamService
 @inject IClientDifficultyService ClientDifficultyService
 @inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 
 @if (Id is null)
 {
@@ -17,14 +18,15 @@ else
 }
 
 
-<EditForm Model="character" OnSubmit="HandleSubmit">
+<EditForm Model="character" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
     <MudCard>
         <MudCardContent>
             <MudTextField Label="Name" @bind-Value="character.Name"
                          For="@(() => character.Name)"></MudTextField>
             <MudTextField Label="Bio" @bind-Value="character.Bio"
-                        Lines="2"></MudTextField>
+                          For="@(() => character.Bio)"
+                          Lines="2"></MudTextField>
             <MudDatePicker Label="Birth Date" @bind-Date="character.BirthDate"></MudDatePicker>
             <MudRadioGroup Class="my-4" @bind-SelectedOption="character.TeamId">
                 @foreach (var team in ClientTeamService.ClientTeam)
@@ -51,6 +53,7 @@ else
                        for="fileInput">
                 Upload Image
             </MudButton>
+            <ValidationMessage For="@(() => character.Image)" />
             <br />
             <MudImage Src="@character.Image" Elevation="25" Class="rounded my-2"></MudImage>
         </MudCardContent>
@@ -61,67 +64,8 @@ else
     <MudButton @onclick="DeleteCharacter" Class="mt-4" Color="Color.Error" Variant="Variant.Filled">
         Delete Character
     </MudButton>
-@* 
-    <div>
-        <label for="name">Name</label>
-        <InputText id="name" @bind-Value="character.Name" class="form-control" />
-        <ValidationMessage For="@(() => character.Name)" />
-    </div>
-    <div>
-        <label for="bio">Bio</label>
-        <InputText id="bio" @bind-Value="character.Bio" class="form-control" />
-    </div>
-    <div>
-        <label for="BirthDate">Birth Date</label>
-        <InputDate @bind-Value="@character.BirthDate" class="form-control"/>
-        <ValidationMessage For="@(() => character.BirthDate)" />
-    </div>
 
-    <div>
-        <label for="image">Image</label>
-        <InputText id="image" @bind-Value="character.Image" class="form-control" />
-    </div>
-
-        <div>
-            <label for="team">Team</label>
-            <InputRadioGroup @bind-Value="character.TeamId" class="form-control">
-                @foreach (var team in ClientTeamService.ClientTeam)
-                {
-                    <br />
-                    <InputRadio Value="@team.Id"/>
-                    <span style="padding-left: 5px;">@team.Name</span>
-                }
-            </InputRadioGroup>
-        </div>
-
-        <div>
-        <label for="difficulty">Difficulty</label>
-        <InputSelect id="difficulty" @bind-Value="character.DifficultyId" class="form-control">
-            <option disabled value="0">Select Difficulty</option>
-            @foreach (var difficulty in ClientDifficultyService.ClientDifficulty)
-            {
-                <option value="@difficulty.Id">@difficulty.Title</option>
-            }
-        </InputSelect>
-        </div>
-        <div>
-        <InputCheckbox id="isReadyToFight" @bind-Value="character.isReadyToFight" class="form-check-input" />
-        <label for="isReadyToFight" class="form-check-label">Ready to Fight?</label>
-        </div>
-        <div>
-            <img src="@character.Image" class="rounded" style="max-height: 200px;" />
-        </div>
-        <div>
-            <label for="image">Image</label>
-            <InputFile OnChange="OnFileChange" class="form-control"></InputFile>
-        </div>
- 
-    <br />
-    <button type="submit" class="btn btn-primary">@btnText</button>
-    <button type="button" class="btn btn-danger"
-            @onclick="DeleteCharacter">
-        Delete Character
-    </button>*@
+    
     <p style="height:500px;"></p> 
     <ValidationSummary />
 </EditForm>
@@ -160,12 +104,57 @@ else
     {
         if (Id is null)
         {
+            if (character.TeamId == 0)
+            {
+                Snackbar.Add(
+                "Team is required!",
+                Severity.Warning,
+                config =>
+            {
+                config.ShowTransitionDuration = 200;
+                config.HideTransitionDuration = 400;
+                config.VisibleStateDuration = 2500;
+            });
+                return;
+            }
+            else if (character.DifficultyId== 0)
+            {
+                Snackbar.Add(
+                "Difficulty is required!",
+                Severity.Warning,
+                config =>
+            {
+                config.ShowTransitionDuration = 200;
+                config.HideTransitionDuration = 400;
+                config.VisibleStateDuration = 2500;
+            });
+                return;
+            }
             await ClientCharacterService.AddCharacter(character);
             StateHasChanged();
+
+            Snackbar.Add(
+            "Character Created Successfully!",
+            Severity.Success,
+            config =>
+            {
+            config.ShowTransitionDuration = 200;
+            config.HideTransitionDuration = 400;
+            config.VisibleStateDuration = 2500;
+            });
         }
         else
         {
             await ClientCharacterService.UpdateCharacter((int)Id, character);
+            Snackbar.Add(
+          "Character Updated",
+          Severity.Success,
+          config =>
+          {
+              config.ShowTransitionDuration = 200;
+              config.HideTransitionDuration = 400;
+              config.VisibleStateDuration = 2500;
+          });
         }
 
     }
@@ -184,6 +173,17 @@ else
     async Task DeleteCharacter()
     {
         await ClientCharacterService.DeleteCharacter(character.Id);
+        NavigationManager.NavigateTo("/all-characters");
+        StateHasChanged();
+        Snackbar.Add(
+       "Character Deleted",
+       Severity.Success,
+       config =>
+       {
+       config.ShowTransitionDuration = 200;
+       config.HideTransitionDuration = 400;
+       config.VisibleStateDuration = 2500;
+       });
     }
 
 }

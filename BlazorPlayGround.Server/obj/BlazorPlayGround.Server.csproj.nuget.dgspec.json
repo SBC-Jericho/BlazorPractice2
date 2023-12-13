@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj": {}
+    "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj": {
+    "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
+        "projectUniqueName": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
         "projectName": "BlazorPlayGround.Client",
-        "projectPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
+        "projectPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\obj\\",
+        "outputPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj": {
-                "projectPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj"
+              "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj": {
+                "projectPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj"
               }
             }
           }
@@ -49,6 +49,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Blazored.LocalStorage": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
+            "Microsoft.AspNetCore.Components.Authorization": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.AspNetCore.Components.WebAssembly": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -106,14 +114,14 @@
         }
       }
     },
-    "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj": {
+    "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj",
+        "projectUniqueName": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj",
         "projectName": "BlazorPlayGround.Server",
-        "projectPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj",
+        "projectPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Server\\BlazorPlayGround.Server.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Server\\obj\\",
+        "outputPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -135,11 +143,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj": {
-                "projectPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj"
+              "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj": {
+                "projectPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj"
               },
-              "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj": {
-                "projectPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj"
+              "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj": {
+                "projectPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj"
               }
             }
           }
@@ -154,9 +162,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.AspNetCore.Components.WebAssembly.Server": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -175,6 +191,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "Swashbuckle.AspNetCore.Filters": {
+              "target": "Package",
+              "version": "[7.0.12, )"
             }
           },
           "imports": [
@@ -200,14 +220,14 @@
         }
       }
     },
-    "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj": {
+    "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj",
         "projectName": "BlazorPlayGround.Shared",
-        "projectPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj",
+        "projectPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\BlazorPlayGround.Shared.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Shared\\obj\\",
+        "outputPath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

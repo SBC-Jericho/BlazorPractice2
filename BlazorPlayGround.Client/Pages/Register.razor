@@ -1,0 +1,99 @@
+﻿@page "/register-single-user/{id:int}"
+@page "/register-user"
+@inject IClientCharacterService ClientCharacterService
+@inject IClientTeamService ClientTeamService
+@inject IClientDifficultyService ClientDifficultyService
+@inject IClientAuthService ClientAuthService
+@layout AuthLayout
+@inject ISnackbar Snackbar
+
+
+@inject NavigationManager NavigationManager
+
+<h3>Register user</h3>
+
+<EditForm Model="user" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <MudCard>
+        <MudCardContent>
+            <MudTextField Label="Username" @bind-Value="user.UserName"
+                          For="@(() => user.UserName)"></MudTextField>  
+            <MudTextField Label="Password" @bind-Value="user.Password"
+                          Lines="2"></MudTextField>
+                            <ValidationMessage For="@(() => user.Password)" />
+
+            <MudSelect Label="Role" @bind-Value="user.Role">
+                <MudSelectItem Value="@("Admin")" />
+                <MudSelectItem Value="@("User")" />
+                <ValidationMessage For="@(() => user.Role)"/>
+
+            </MudSelect>
+
+            <MudTextField Label="First Name" @bind-Value="user.FirstName"
+                          For="@(() => user.FirstName)"></MudTextField>            
+            <MudTextField Label="Last Name" @bind-Value="user.LastName"
+                          For="@(() => user.LastName)"
+                          Lines="2"></MudTextField>
+                   
+            <MudTextField Label="Contact" @bind-Value="user.Contact"
+                          For="@(() => user.Contact)"></MudTextField>
+                       
+            <MudTextField Label="Address" @bind-Value="user.Address"
+                          For="@(() => user.Address)"></MudTextField>
+                       
+
+            <MudButton ButtonType="ButtonType.Submit" Class="mt-4" Color="Color.Primary"
+                       Variant="Variant.Filled">Register</MudButton>
+            <MudButton OnClick="NavigateLogin" ButtonType="ButtonType.Submit" Class="mt-4" Color="Color.Primary"
+                       Variant="Variant.Filled">Login</MudButton>
+        </MudCardContent>
+    </MudCard>
+   
+    <p style="height:500px;"></p>
+
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
+    BlazorPlayGround.Shared.DTOs.UserDTO user =
+    new BlazorPlayGround.Shared.DTOs.UserDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Save new Character" : "Update Character";
+        await ClientTeamService.GetAllTeam();
+        await ClientDifficultyService.GetAllDifficulty();
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id is null)
+        {
+            await ClientAuthService.Register(user);
+            NavigationManager.NavigateTo("login");
+
+            Snackbar.Add(
+            "Registration Successful",
+            Severity.Success,
+            config =>
+            {
+            config.ShowTransitionDuration = 200;
+            config.HideTransitionDuration = 400;
+            config.VisibleStateDuration = 2500;
+            });
+        }
+    
+    }
+
+    private void NavigateLogin()
+    {
+        NavigationManager.NavigateTo("login");
+
+    }
+
+}

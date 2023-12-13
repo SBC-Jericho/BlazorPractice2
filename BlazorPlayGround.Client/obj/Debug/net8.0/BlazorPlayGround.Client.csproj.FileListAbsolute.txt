@@ -3150,3 +3150,13 @@ C:\Users\user\source\repos\BlazorEditForm\BlazorPractice2\BlazorPlayGround.Clien
 C:\Users\user\source\repos\BlazorEditForm\BlazorPractice2\BlazorPlayGround.Client\obj\Debug\net8.0\refint\BlazorPlayGround.Client.dll
 C:\Users\user\source\repos\BlazorEditForm\BlazorPractice2\BlazorPlayGround.Client\obj\Debug\net8.0\BlazorPlayGround.Client.pdb
 C:\Users\user\source\repos\BlazorEditForm\BlazorPractice2\BlazorPlayGround.Client\obj\Debug\net8.0\ref\BlazorPlayGround.Client.dll
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\bin\Debug\net8.0\wwwroot\_framework\Blazored.LocalStorage.wasm
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.wasm
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.wasm.gz
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\bin\Debug\net8.0\wwwroot\_framework\Blazored.LocalStorage.wasm.gz
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\bin\Debug\net8.0\Blazored.LocalStorage.dll
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Authorization.dll
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\obj\Debug\net8.0\webcil\Blazored.LocalStorage.wasm
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.Authorization.wasm
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\obj\Debug\net8.0\compressed\xt6t0cexbv.gz
+C:\Users\user\source\repos\BlazorPractice2\BlazorPlayGround.Client\obj\Debug\net8.0\compressed\0itaph50eu.gz

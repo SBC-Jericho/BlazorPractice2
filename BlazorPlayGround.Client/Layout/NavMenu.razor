@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorPlayGround.Client</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -24,23 +26,54 @@
                 <span class="bi bi-cloud-drizzle-fill-nested-nav-menu" aria-hidden="true"></span> Weather
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="all-characters">
-                <span class="bi bi-people-fill-nested-nav-menu" aria-hidden="true"></span> Characters
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="all-teams">
-                <span class="bi bi-people-fill-nested-nav-menu" aria-hidden="true"></span> Teams
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="all-difficulties">
-                <span class="bi bi-people-fill-nested-nav-menu" aria-hidden="true"></span> Difficulties
-            </NavLink>
-        </div>
+
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="all-user">
+                        <span class="bi bi-person-lines-fill-nested-nav-menu" aria-hidden="true"></span> User
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Admin,User">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="all-characters">
+                        <span class="bi bi-person-fill-nested-nav-menu" aria-hidden="true"></span> Characters
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="all-teams">
+                        <span class="bi bi-people-fill-nested-nav-menu" aria-hidden="true"></span> Teams
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="all-difficulties">
+                        <span class="bi bi-bar-chart-fill-nested-nav-menu" aria-hidden="true"></span> Difficulties
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+       
+        <AuthorizeView Roles="Admin,User">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="register-user">
+                        <span class="bi bi-box-arrow-in-right-nav-menu" aria-hidden="true"></span> Register
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
     </nav>
 </div>
+
 
 @code {
     private bool collapseNavMenu = true;

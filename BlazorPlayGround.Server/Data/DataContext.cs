@@ -10,6 +10,8 @@ namespace BlazorPlayGround.Server.Data
         public DbSet<Character> Characters { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Difficulty> Difficulties{ get; set; }
+        public DbSet<User> user { get; set; }
+        public DbSet<UserDetails> userDetails { get; set; }
 
     }
 }

@@ -1,0 +1,45 @@
+﻿@page "/all-user"
+
+@inject IClientCharacterService ClientCharacterService
+@inject IClientTeamService ClientTeamService
+@inject IClientDifficultyService ClientDifficultyService
+@inject IClientAuthService ClientAuthService
+@inject NavigationManager NavigationManager
+<PageTitle>Registered User</PageTitle>
+
+<h1>User</h1>
+
+<MudTable Items="ClientAuthService.ClientUser" Hover="true" Striped="true" Dense="true" Class="mb-2">
+    <HeaderContent>
+        <MudTh>First Name</MudTh>
+        <MudTh>Last Name</MudTh>
+        <MudTh>Contact</MudTh>
+        <MudTh>Address</MudTh>
+        <MudTh>Role</MudTh>
+    </HeaderContent>
+
+    <RowTemplate>
+        <MudTd DataLabel="First Name">@context.UserDetails.FirstName</MudTd>
+        <MudTd DataLabel="Last Name">@context.UserDetails.LastName</MudTd>
+        <MudTd DataLabel="Last Name">@context.UserDetails.Contact</MudTd>
+        <MudTd DataLabel="Last Name">@context.UserDetails.Address</MudTd>
+        <MudTd DataLabel="Last Name">@context.Role</MudTd>
+      
+    </RowTemplate>
+
+    </MudTable>
+
+
+    @* <button class="btn btn-primary"
+        @onclick="CreateNewCharacter">
+    Create new Character
+</button> *@
+    <p style="height:500px;"></p>
+    @code {
+
+    // lifecycle method
+    protected override async Task OnInitializedAsync()
+    {
+        await ClientAuthService.GetAllUser();
+    }
+}

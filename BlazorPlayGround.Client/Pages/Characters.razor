@@ -3,62 +3,11 @@
 @inject IClientTeamService ClientTeamService
 @inject IClientDifficultyService ClientDifficultyService
 @inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 <PageTitle>Character</PageTitle>
 
+
 <h1>Character</h1>
-
-@* <MudSimpleTable Hover="true" Striped="true" Dense="true">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Bio</th>
-            <th>Birth Date</th>
-            <th>Team</th>
-            <th>Difficulty</th>
-            <th>Ready to Fight?</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var character in ClientCharacterService.ClientCharacter)
-        {
-
-            <tr>
-                <td><img src="@character.Image" class="rounded" style="max-height: 100px;" /></td>
-                <td>@character.Name</td>
-                <td>@character.Bio</td>
-                <td>@character.BirthDate.ToString("MM/dd/yyyy")</td>
-                @if(character.Team != null){
-                    <td>@character.Team.Name</td>
-                }
-                else {
-                <td>N/A</td>
-                }
-                @if (character.Difficulty != null)
-                {
-                    <td>@character.Difficulty.Title</td>
-                }
-                else
-                {
-                    <td>N/A</td>
-                }
-                <td>@character.isReadyToFight</td>
-                <td>
-                    <button class="btn btn-primary"
-                            @onclick="(() => EditCharacter(character.Id))">
-                        <i class="fa-solid fa-pencil"></i>
-                    </button>`
-                    <button class="btn btn-danger"
-                            @onclick="(() => DeleteCharacter(character.Id))">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</MudSimpleTable> *@
-
 
 <MudTable Items="ClientCharacterService.ClientCharacter" Hover="true" Striped="true" Dense="true" Class="mb-2">
     <HeaderContent>
@@ -70,57 +19,61 @@
         <MudTh>Difficulty</MudTh>
         <MudTh>Ready to Fight?</MudTh>
     </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Image"><MudAvatar Image="@context.Image" /></MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="Bio">@context.Bio</MudTd>
+    <RowTemplate Context="character">
+        <MudTd DataLabel="Image"><MudAvatar Image="@character.Image" /></MudTd>
+        <MudTd DataLabel="Name">@character.Name</MudTd>
+            <MudTd DataLabel="Bio">@character.Bio</MudTd>
             <MudTd DataLabel="BirthDate">
-                @if (context.BirthDate.HasValue)
+                @if (character.BirthDate.HasValue)
             {
-                @context.BirthDate.Value.ToString("MMMM dd, yyyy")
+                @character.BirthDate.Value.ToString("MMMM dd, yyyy")
             }
             else
             {
                 <span>N/A</span>
             }
         </MudTd>
-            @if (context.Team != null)
+        @if (character.Team != null)
             {
-            <MudTd DataLabel="Team">@context.Team.Name</MudTd>
+            <MudTd DataLabel="Team">@character.Team.Name</MudTd>
             }
             else
             {
               <MudTd>N/A</MudTd>
             }
-        @if (context.Difficulty != null)
+        @if (character.Difficulty != null)
             {
-            <MudTd DataLabel="Difficulty">@context.Difficulty.Title</MudTd>
+            <MudTd DataLabel="Difficulty">@character.Difficulty.Title</MudTd>
             }
             else
             {
                 <MudTd>N/A</MudTd>
             }
-        <MudTd DataLabel="isReadyToFight">@context.isReadyToFight</MudTd>
-            <MudTd DataLabel="Edit">
-                <MudIconButton OnClick="(() => EditCharacter(context.Id))"
-                                Icon="@Icons.Material.Filled.Edit"
-                                Color="Color.Primary"
-                                Variant="Variant.Filled"></MudIconButton>
-
-            </MudTd>
-            <MudTd DataLabel="Delete">
-                <MudIconButton OnClick="(() => DeleteCharacter(context.Id))"
-                               Icon="@Icons.Material.Filled.Delete"
-                               Color="Color.Error"
-                               Variant="Variant.Filled"></MudIconButton>
-            </MudTd>
-
+        <MudTd DataLabel="isReadyToFight">@character.isReadyToFight</MudTd>
+        <AuthorizeView Roles="Admin">
+           <Authorized>
+                <MudTd DataLabel="Edit">
+                        <MudIconButton OnClick="(() => EditCharacter(character.Id))"
+                                    Icon="@Icons.Material.Filled.Edit"
+                                    Color="Color.Primary"
+                                    Variant="Variant.Filled"></MudIconButton>
+                </MudTd>
+                <MudTd DataLabel="Delete">
+                        <MudIconButton OnClick="(() => DeleteCharacter(character.Id))"
+                                   Icon="@Icons.Material.Filled.Delete"
+                                   Color="Color.Error"
+                                   Variant="Variant.Filled"></MudIconButton>
+                </MudTd>
+            </Authorized>
+         </AuthorizeView>
     </RowTemplate>
 
 </MudTable>  
-
-    <MudButton @onclick="CreateNewCharacter" Color="Color.Primary" Variant="Variant.Filled">Create new character</MudButton>
-
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <MudButton @onclick="CreateNewCharacter" Color="Color.Primary" Variant="Variant.Filled">Create new character</MudButton>
+     </Authorized>
+    </AuthorizeView>
 @* <button class="btn btn-primary"
         @onclick="CreateNewCharacter">
     Create new Character
@@ -149,5 +102,14 @@
     {
         await ClientCharacterService.DeleteCharacter(id);
         StateHasChanged();
+        Snackbar.Add(
+        "Character Deleted",
+        Severity.Success,
+        config =>
+        {
+        config.ShowTransitionDuration = 200;
+        config.HideTransitionDuration = 400;
+        config.VisibleStateDuration = 2500;
+        });
     }
 }

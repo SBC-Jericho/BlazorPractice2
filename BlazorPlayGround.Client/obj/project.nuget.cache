@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "O6W6/RawZEA9aXuFMQrvVznQQu7N+ovmYbMp5HxpjHwddtgXjE+OTarKwvbEIptDvJA3j60Q19/FvC5lsQiliA==",
+  "dgSpecHash": "3jmK1OwDzWQHVwi7GyWwobdDQy/hpRZ/m709xSLi6fIUT/8Ri/gOAmQx7DVDsPeEJXA/8yJOqWx++cfof0lF7Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\BlazorEditForm\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\BlazorPractice2\\BlazorPlayGround.Client\\BlazorPlayGround.Client.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\blazored.localstorage\\4.4.0\\blazored.localstorage.4.4.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.0\\microsoft.aspnetcore.authorization.8.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.components\\8.0.0\\microsoft.aspnetcore.components.8.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\8.0.0\\microsoft.aspnetcore.components.analyzers.8.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.components.authorization\\8.0.0\\microsoft.aspnetcore.components.authorization.8.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.components.forms\\8.0.0\\microsoft.aspnetcore.components.forms.8.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.components.web\\8.0.0\\microsoft.aspnetcore.components.web.8.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\8.0.0\\microsoft.aspnetcore.components.webassembly.8.0.0.nupkg.sha512",

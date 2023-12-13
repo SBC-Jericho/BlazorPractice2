@@ -1,6 +1,7 @@
 ﻿
 using BlazorPlayGround.Server.Services.CharacterService;
 using BlazorPlayGround.Shared.DTOs;
+using BlazorPlayGround.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,6 @@
-﻿using BlazorPlayGround.Shared.DTOs;
+﻿using BlazorPlayGround.Server.Services.AuthService;
+using BlazorPlayGround.Server.Services.CharacterService;
+using BlazorPlayGround.Shared.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,39 +17,41 @@ namespace BlazorPlayGround.Server.Controllers
     {
         public static User user = new User();
         private readonly IConfiguration _configuration;
-        public AuthController(IConfiguration configuration)
+        private readonly DataContext _context;
+        private readonly IAuthService _authService;
+        private readonly IHttpContextAccessor _contextAccessor;
+      
+        public AuthController(IConfiguration configuration, IAuthService authService, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
+            _authService = authService;
+            _contextAccessor = httpContextAccessor; 
         }
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Reguster(UserDTO request) 
+        public async Task<ActionResult<User>> Register(UserDTO request) 
         {
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            user.Username = request.Username;   
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
-            return Ok(user);
+            var result = await _authService.Register(request);
+            return Ok(result);
         }
 
         [HttpPost("login")]
 
-        public async Task<ActionResult<string>> Login(UserDTO request) 
+        public async Task<ActionResult<string>> Login(UserLoginDTO request) 
         {
-            if(user.Username != request.Username) 
+            var result = await _authService.Login(request);
+            if (result == "No User Found" || result == "Wrong password.")
             {
-                return BadRequest("User not found");
+                return BadRequest(result);
             }
+            return Ok(result);
+        }
 
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt)) 
-            {
-                return BadRequest("Wrong Password");
-            }
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> GetAllUser()
+        {
 
-            string token = CreateToken(user);
-
-            return Ok(token);
+            return await _authService.GetAllUser();
         }
 
         private string CreateToken(User user) 
@@ -90,5 +94,6 @@ namespace BlazorPlayGround.Server.Controllers
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
+
     }
 }
